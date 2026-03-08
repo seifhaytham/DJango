@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ course.code }} - {{ course.title }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'instructor_detail' course.instructor.pk %}" class="back-link">
+    <span class="arrow">&larr;</span> Back to {{ course.instructor.name }}
+</a>
+
+<header class="page-header">
+    <h1>{{ course.code }} &mdash; {{ course.title }}</h1>
+</header>
+
+<div class="info-block">
+    <div class="info-row">
+        <span class="info-label">Instructor</span>
+        <span class="info-value">{{ course.instructor.name }}</span>
+    </div>
+    <div class="info-row">
+        <span class="info-label">Description</span>
+        <span class="info-value">{{ course.description|default:"No description provided." }}</span>
+    </div>
+</div>
+
+<h2 class="section-title">Enrolled Students</h2>
+<ul class="student-list">
+    {% for student in students %}
+    <li class="student-card">
+        {% if student.image %}
+        <img class="student-avatar" src="{{ student.image.url }}" alt="{{ student.name }}">
+        {% else %}
+        <div class="student-avatar student-avatar--placeholder">
+            {{ student.name|make_list|first }}
+        </div>
+        {% endif %}
+        <div class="student-info">
+            <span class="student-name">{{ student.name }}</span>
+            <span class="student-id-badge">{{ student.student_id }}</span>
+            <span class="student-email">{{ student.email }}</span>
+        </div>
+    </li>
+    {% empty %}
+    <li class="empty-state" style="width:100%;">No students enrolled in this course.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

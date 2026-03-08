@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ instructor.name }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'instructor_list' %}" class="back-link">
+    <span class="arrow">&larr;</span> Back to instructors
+</a>
+
+<header class="page-header">
+    <h1>{{ instructor.name }}</h1>
+</header>
+
+<div class="info-block">
+    <div class="info-row">
+        <span class="info-label">Email</span>
+        <span class="info-value">{{ instructor.email }}</span>
+    </div>
+    <div class="info-row">
+        <span class="info-label">Department</span>
+        <span class="info-value">{{ instructor.department }}</span>
+    </div>
+</div>
+
+<h2 class="section-title">Courses</h2>
+<ul class="card-list">
+    {% for course in courses %}
+    <li class="card-item">
+        <a href="{% url 'course_detail' course.pk %}">
+            <span class="card-title">{{ course.code }} &mdash; {{ course.title }}</span>
+        </a>
+    </li>
+    {% empty %}
+    <li class="empty-state">No courses assigned to this instructor.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

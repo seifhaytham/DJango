@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Instructors{% endblock %}
+
+{% block content %}
+<header class="page-header">
+    <h1>Instructors</h1>
+    <p class="subtitle">Browse all faculty members</p>
+</header>
+
+<ul class="card-list">
+    {% for instructor in instructors %}
+    <li class="card-item">
+        <a href="{% url 'instructor_detail' instructor.pk %}">
+            <span class="card-title">{{ instructor.name }}</span>
+            <span class="card-meta">{{ instructor.department }}</span>
+        </a>
+    </li>
+    {% empty %}
+    <li class="empty-state">No instructors available.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
