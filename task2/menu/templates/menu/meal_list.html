@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meal List</title>
+</head>
+<body>
+    <h1>Menu</h1>
+
+    <form method="get" action=".">
+        Name: <input type="text" name="name" value="{{ name_query }}"/>
+        Category:
+        <select name="category">
+            <option value="">(any)</option>
+            {% for cat in categories %}
+                <option value="{{ cat }}" {% if cat == category_query %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <ul>
+        {% for meal in meals %}
+            <li>
+                <strong>{{ meal.name }}</strong> - ${{ meal.price }}
+                {% if not meal.available %}<em>(not available)</em>{% endif %}
+                <br />
+                <small>{{ meal.category }}</small>
+            </li>
+        {% empty %}
+            <li>No meals match your query.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
